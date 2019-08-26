@@ -1,6 +1,7 @@
 
 library(shiny)
 library(tidyverse)
+forbes<-read_csv('Forbes2000.csv')
 ui <- fluidPage(
 
     # Application title
