@@ -1,0 +1,66 @@
+---
+title: "IBS intro to R"
+author: "Shannon B. Hagerty"
+date: "8/26/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+## Incredibly Important Business Update 
+
+**What is R**
+- R is an open source programming language that is very popular for data analysis / data scien. 
+- Its popularity means a lot of code is already written and available for you to do common data analysis tasks. 
+```{r}
+library(tidyverse)
+library(ggthemes)
+```
+  
+**Why should you learn R**
+- It is open source 
+- It enables you to create reproducible analyses, which can save you both time and some frustration
+- It gives you a lot of great options for communicating your analyses out (i.e. ggplot for graphing,Rmarkdown for reports, shiny for apps)
+
+**Introduction to Rstudio, Rmarkdown, and R**
+- Rstudio is the IDE we like to use to write our R code
+- Rmarkdown is a document that allows you to put code, graphs, and text in one document. 
+
+#### Load Data
+```{r}
+forbes<-read_csv('Forbes2000.csv')
+```
+#### Explore the data set 
+```{r}
+glimpse(forbes)
+```
+
+#### Summarize the Data by category
+```{r}
+category_summary<- forbes %>% group_by(category) %>% summarize(mean_sales = mean(sales), mean_profit= mean(profits), mean_marketvalue = mean(marketvalue))
+```
+#### Plot the Summary
+```{r}
+ggplot(category_summary) + geom_bar(aes(x=category, y=mean_profit), stat="identity")+theme_economist()+coord_flip()+ylab('Average Profit')+xlab('')
+```
+Now I can tell you everything that is important about this graph in a really nice report. 
+
+#### Can you make your own graph? 
+Try to adjust the code below to summarize by the country column. 
+
+**Summarize the Data by country**
+```{r error=TRUE}
+country_summary<- forbes %>% group_by(PUT_SOMETHING_HERE) %>% summarize(mean_sales = mean(sales), mean_profit= mean(profits), mean_marketvalue = mean(marketvalue))
+```
+
+Okay, now there are a lot of countries.  Take a look at the data set and lets select out only the countries with an average market value greater than 20.
+
+**Get only countries with highest market value**
+```{r error=TRUE}
+country_summary<- country_summary %>% filter(mean_marketvalue > 20)
+```
+
+**ADAPT THE CODE BELOW TO Plot the country summary**
+Try changing the metric we're plotting (i.e. instead of mean_marketvalue try mean_profit)
+```{r error=TRUE}
+ggplot(category_summary) + geom_bar(aes(x=category, y=mean_profit), stat="identity")+theme_economist()+coord_flip()+ylab('Average Profit')+xlab('')
+```
